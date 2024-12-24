@@ -14,9 +14,8 @@ build/
 database/production.db
 .psql_history
 
-# Prisma
-.prisma/
-.prisma/client/
+
+
 
 # Log files
 npm-debug.log
@@ -33,6 +32,6 @@ Thumbs.db
 __snapshots__/
 
 # Prisma Client build
-prisma/
+
 node_modules/esbuild/bin/esbuild
 node_modules/.bin/esbuild.bunx

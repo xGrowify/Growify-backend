@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+enum Role {
+  USER
+  ADMIN
+  FREELANCER
+}
+model WaitlistUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  createdAt DateTime @default(now())
+}
+
+model User {
+  userId               String                  @id @default(cuid())
+  username             String               @unique
+  email                String               @unique
+  password             String
+  profilePicture       String?
+  bio                  String?
+  role                 Role               @default(USER)
+  refreshToken         String
+  isVerified           Boolean              @default(false) // Email verification status
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+  posts                Post[]
+  pitchProjects        PitchProject[]
+  socialMediaLinks     SocialMediaLink[]
+  freelanceGigsOwned   FreelanceGigCreate[]
+  freelanceGigsApplied FreelanceGigApply[]
+  notifications        Notification[]
+  skills               Skill[]
+  reviewsGiven         Review[]             @relation("Reviewer")
+  reviewsReceived      Review[]             @relation("Reviewee")
+}
+
+model Post {
+  postId    Int      @id @default(autoincrement())
+  title     String
+  content   String
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [userId])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PitchProject {
+  projectId          Int      @id @default(autoincrement())
+  projectTitle       String
+  projectDescription String
+  projectUrl         String
+  upvotes            Int      @default(0)
+  author             User     @relation(fields: [authorId], references: [userId])
+  authorId           String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model SocialMediaLink {
+  linkId          Int      @id @default(autoincrement())
+  linkedin        String?
+  twitter         String?
+  github          String?
+  figma           String?
+  peerlist        String?
+  instagram       String?
+  youtube         String?
+  personalWebsite String?
+  author          User     @relation(fields: [authorId], references: [userId])
+  authorId        String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model FreelanceGigCreate {
+  gigId       Int                 @id @default(autoincrement())
+  title       String
+  description String
+  budget      Float
+  duration    String
+  author      User                @relation(fields: [authorId], references: [userId])
+  authorId    String
+  applicants  FreelanceGigApply[]
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+}
+
+model FreelanceGigApply {
+  applicationId  Int                @id @default(autoincrement())
+  message        String
+  budget         Float
+  duration       String
+  freelanceGig   FreelanceGigCreate @relation(fields: [freelanceGigId], references: [gigId])
+  freelanceGigId Int
+  author         User               @relation(fields: [authorId], references: [userId])
+  authorId       String
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+}
+
+model Notification {
+  notificationId Int      @id @default(autoincrement())
+  content        String
+  type           String // Notification type (e.g., "application", "upvote")
+  read           Boolean  @default(false)
+  user           User     @relation(fields: [userId], references: [userId])
+  userId         String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Skill {
+  skillId   Int      @id @default(autoincrement())
+  name      String   @unique // Skills should be unique
+  users     User[]
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  reviewId   Int      @id @default(autoincrement())
+  rating     Int      @default(0) // Ratings between 1-5
+  comment    String
+  reviewer   User     @relation("Reviewer", fields: [reviewerId], references: [userId])
+  reviewerId String
+  reviewee   User     @relation("Reviewee", fields: [revieweeId], references: [userId])
+  revieweeId String
+  createdAt  DateTime @default(now())
+}
