@@ -1,0 +1,38 @@
+# Compiled output
+node_modules/
+dist/
+out/
+build/
+
+# Environment variables
+.env
+.env.*
+.env.test
+.env.production
+# Database
+**/*.db
+database/production.db
+.psql_history
+
+# Prisma
+.prisma/
+.prisma/client/
+
+# Log files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+logs/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Next.js built files
+.next/
+__snapshots__/
+
+# Prisma Client build
+prisma/
+node_modules/esbuild/bin/esbuild
+node_modules/.bin/esbuild.bunx
