@@ -2,7 +2,7 @@ import express from "express";
 import type { Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import  Apolloserver  from "./lib/apolloserver";
+import  Apolloserver  from "./lib/apolloserver.js";
 import { expressMiddleware } from "@apollo/server/express4";
 import { userRouter } from "./routes/user.routes";
 import cookieParser from "cookie-parser";
