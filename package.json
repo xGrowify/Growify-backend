@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/app.js",
+
   "scripts": {
-    "start": "NODE_ENV=production node dist/app.js",
-    "build": "tsc",
-    "dev": "nodemon --watch src --ext ts --exec \"node src/app.ts\""
+    "start": "set NODE_ENV=PRODUCTION & node dist/app.js",
+    "build": "npx tsc -p .",
+    "dev": "npx tsx watch src/app.ts"
   },
   "keywords": [],
   "author": "",

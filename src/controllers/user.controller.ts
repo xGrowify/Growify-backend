@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { generateToken } from "../middlewares/auth.middleware";
+
 import { asyncHandler } from "../utils/AsyncHandler";
 import { ApiError } from "../utils/ApiError";
 import { ApiResponse, ResponseCode } from "../utils/ApiResponse";
@@ -202,3 +202,4 @@ export {
   logoutUser,
   getCurrentUser,
 };
+
