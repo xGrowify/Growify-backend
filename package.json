@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/app.js",
-
   "scripts": {
     "start": "set NODE_ENV=PRODUCTION & node dist/app.js",
     "build": "npx tsc -p .",
@@ -26,7 +25,8 @@
     "graphql": "^16.10.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "1.10.0",
-    "prisma": "^6.1.0"
+    "prisma": "^6.1.0",
+    "resend": "^4.0.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

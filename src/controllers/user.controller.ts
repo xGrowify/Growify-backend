@@ -5,6 +5,10 @@ import { asyncHandler } from "../utils/AsyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse, ResponseCode } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
+import {
+  generateResetToken,
+  sendResetEmailWithResend,
+} from "../utils/sendresetemail.js";
 
 const prisma = new PrismaClient();
 
@@ -194,6 +198,70 @@ const getCurrentUser = asyncHandler(async (req, res) => {
       )
     );
 });
+const forgetpassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  const findemail = await prisma.user.findUnique({
+    where: { email },
+  });
+  if (!findemail) {
+    throw new ApiError(400, "User not found");
+  }
+
+  const token = generateResetToken();
+  const tokenExpiry = new Date(Date.now() + 3600000);
+
+  await prisma.user.update({
+    where: { email },
+    data: {
+      resetToken: token,
+      tokenExpires: tokenExpiry,
+    },
+  });
+  const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+
+  await sendResetEmailWithResend(email, resetLink);
+
+  return res.status(ResponseCode.SUCCESS_OK).json({
+    message: "Reset link sent to your email",
+  });
+});
+
+const changeusername = asyncHandler(async (req, res) => {
+  const {username} = req.body;
+
+  if(!username){
+    throw new ApiError(400, "Please give username");
+  }
+   
+  const checkusernamealreadyexits = await prisma.user.findUnique({
+    where: {username},
+  })
+  if(checkusernamealreadyexits){
+    throw new ApiError(400, "Username already exists");
+  }
+
+  const user = await prisma.user.update({
+    where: {userId: req.userId},
+    data: {username},
+    select: {
+      userId: true,
+      username: true,
+      email: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return res.status(ResponseCode.SUCCESS_OK).json({
+    message: "Username updated successfully",
+    user,
+  });
+
+
+  }) 
+
+
 
 export {
   createUser,
@@ -201,5 +269,6 @@ export {
   login,
   logoutUser,
   getCurrentUser,
+  forgetpassword,
+  changeusername
 };
-

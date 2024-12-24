@@ -6,11 +6,13 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 enum Role {
   USER
   ADMIN
   FREELANCER
 }
+
 model WaitlistUser {
   id        String   @id @default(cuid())
   email     String   @unique
@@ -19,14 +21,16 @@ model WaitlistUser {
 }
 
 model User {
-  userId               String                  @id @default(cuid())
+  userId               String               @id @default(cuid())
   username             String               @unique
   email                String               @unique
   password             String
   profilePicture       String?
   bio                  String?
-  role                 Role               @default(USER)
+  role                 Role                 @default(USER)
   refreshToken         String
+  resetToken           String?
+  tokenExpires         DateTime?
   isVerified           Boolean              @default(false) // Email verification status
   createdAt            DateTime             @default(now())
   updatedAt            DateTime             @updatedAt
