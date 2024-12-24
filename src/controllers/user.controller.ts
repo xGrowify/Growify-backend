@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-
 import { asyncHandler } from "../utils/AsyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse, ResponseCode } from "../utils/ApiResponse.js";
@@ -228,22 +227,22 @@ const forgetpassword = asyncHandler(async (req, res) => {
 });
 
 const changeusername = asyncHandler(async (req, res) => {
-  const {username} = req.body;
+  const { username } = req.body;
 
-  if(!username){
+  if (!username) {
     throw new ApiError(400, "Please give username");
   }
-   
+
   const checkusernamealreadyexits = await prisma.user.findUnique({
-    where: {username},
-  })
-  if(checkusernamealreadyexits){
+    where: { username },
+  });
+  if (checkusernamealreadyexits) {
     throw new ApiError(400, "Username already exists");
   }
 
   const user = await prisma.user.update({
-    where: {userId: req.userId},
-    data: {username},
+    where: { userId: req.userId },
+    data: { username },
     select: {
       userId: true,
       username: true,
@@ -257,11 +256,7 @@ const changeusername = asyncHandler(async (req, res) => {
     message: "Username updated successfully",
     user,
   });
-
-
-  }) 
-
-
+});
 
 export {
   createUser,
@@ -270,5 +265,5 @@ export {
   logoutUser,
   getCurrentUser,
   forgetpassword,
-  changeusername
+  changeusername,
 };
