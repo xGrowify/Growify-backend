@@ -4,8 +4,8 @@ import {
   getCurrentUser,
   login,
   logoutUser,
-} from "../controllers/user.controller";
-import { handleAuthError, verifyJWT } from "../middlewares/auth.middleware";
+} from "../controllers/user.controller.js";
+import { handleAuthError, verifyJWT } from "../middlewares/auth.middleware.js";
 
 const userRouter = Router();
 

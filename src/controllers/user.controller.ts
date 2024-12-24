@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
-import { asyncHandler } from "../utils/AsyncHandler";
-import { ApiError } from "../utils/ApiError";
-import { ApiResponse, ResponseCode } from "../utils/ApiResponse";
+import { asyncHandler } from "../utils/AsyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse, ResponseCode } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();

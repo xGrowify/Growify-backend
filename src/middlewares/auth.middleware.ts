@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { asyncHandler } from "../utils/AsyncHandler";
-import { ApiError } from "../utils/ApiError";
-import { ResponseCode } from "../utils/ApiResponse";
+import { asyncHandler } from "../utils/AsyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ResponseCode } from "../utils/ApiResponse.js";
 const SECRET_KEY = process.env.JWT_SECRET;
 if (!SECRET_KEY) {
   throw new Error("JWT_SECRET is not defined in environment variables");

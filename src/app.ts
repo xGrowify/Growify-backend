@@ -4,7 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import  Apolloserver  from "./lib/apolloserver.js";
 import { expressMiddleware } from "@apollo/server/express4";
-import { userRouter } from "./routes/user.routes";
+import { userRouter } from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config({ path: "./.env" });

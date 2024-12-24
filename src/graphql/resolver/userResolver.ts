@@ -1,4 +1,4 @@
-import prisma from "../../lib/db";
+import prisma from "../../lib/db.js";
 type user = {
   id: string;
   email: string;
