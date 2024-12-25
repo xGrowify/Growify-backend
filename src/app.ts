@@ -2,10 +2,11 @@ import express from "express";
 import type { Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import  Apolloserver  from "./lib/apolloserver.js";
+import Apolloserver from "./lib/apolloserver.js";
 import { expressMiddleware } from "@apollo/server/express4";
 import { userRouter } from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
+import { heltcheckRouter } from "./routes/helthcheck.routes.js";
 
 dotenv.config({ path: "./.env" });
 const envMode = process.env.NODE_ENV?.trim() || "DEVELOPMENT";
@@ -19,6 +20,7 @@ app.use(cors({ origin: "*", credentials: true }));
 app.use(cookieParser());
 
 app.use("/api/auth", userRouter);
+app.use("/api/", heltcheckRouter);
 
 const startApolloServer = async () => {
   await Apolloserver.start();

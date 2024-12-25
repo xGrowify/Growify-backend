@@ -46,7 +46,7 @@ model User {
 }
 
 model Post {
-  postId    Int      @id @default(autoincrement())
+  postId    String   @id @default(cuid())
   title     String
   content   String
   published Boolean  @default(false)
@@ -57,7 +57,7 @@ model Post {
 }
 
 model PitchProject {
-  projectId          Int      @id @default(autoincrement())
+  projectId          String   @id @default(cuid())
   projectTitle       String
   projectDescription String
   projectUrl         String
@@ -69,7 +69,7 @@ model PitchProject {
 }
 
 model SocialMediaLink {
-  linkId          Int      @id @default(autoincrement())
+  linkId          String   @id @default(cuid())
   linkedin        String?
   twitter         String?
   github          String?
@@ -85,7 +85,7 @@ model SocialMediaLink {
 }
 
 model FreelanceGigCreate {
-  gigId       Int                 @id @default(autoincrement())
+  gigId       String              @id @default(cuid())
   title       String
   description String
   budget      Float
@@ -103,7 +103,7 @@ model FreelanceGigApply {
   budget         Float
   duration       String
   freelanceGig   FreelanceGigCreate @relation(fields: [freelanceGigId], references: [gigId])
-  freelanceGigId Int
+  freelanceGigId String
   author         User               @relation(fields: [authorId], references: [userId])
   authorId       String
   createdAt      DateTime           @default(now())
