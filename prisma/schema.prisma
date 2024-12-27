@@ -63,6 +63,7 @@ model PitchProject {
   projectUrl         String
   upvotes            Int      @default(0)
   author             User     @relation(fields: [authorId], references: [userId])
+  projectImages      String[] 
   authorId           String
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt

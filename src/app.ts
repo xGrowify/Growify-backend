@@ -7,6 +7,7 @@ import { expressMiddleware } from "@apollo/server/express4";
 import { userRouter } from "./routes/user.routes.js";
 import cookieParser from "cookie-parser";
 import { heltcheckRouter } from "./routes/helthcheck.routes.js";
+import { pitchRoute } from "./routes/pitchProject.routes.js";
 
 dotenv.config({ path: "./.env" });
 const envMode = process.env.NODE_ENV?.trim() || "DEVELOPMENT";
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", userRouter);
 app.use("/api/", heltcheckRouter);
+app.use("/api/pitch",pitchRoute)
 
 const startApolloServer = async () => {
   await Apolloserver.start();
