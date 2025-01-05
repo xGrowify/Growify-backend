@@ -15,14 +15,22 @@ const port = process.env.PORT || 3000;
 
 const app: Application = express();
 
+// Update CORS configuration
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || "http://localhost:3000", // Replace with your frontend URL
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "*", credentials: true }));
 app.use(cookieParser());
 
 app.use("/api/auth", userRouter);
 app.use("/api/", heltcheckRouter);
-app.use("/api/pitch",pitchRoute)
+app.use("/api/pitch", pitchRoute);
 
 const startApolloServer = async () => {
   await Apolloserver.start();
@@ -34,3 +42,4 @@ startApolloServer().then(() => {
     console.log(`Server is working on Port: ${port} in ${envMode} Mode.`)
   );
 });
+
